@@ -1,4 +1,3 @@
-// import { ColorRing } from 'react-loader-spinner';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Component } from 'react';
@@ -53,7 +52,8 @@ export class App extends Component {
         );
       }
       this.setState(prevState => ({
-        arrayImages: [...prevState.arrayImages, ...data.hits]}))
+        arrayImages: [...prevState.arrayImages, ...data.hits],
+      }));
       const totalPage = Math.ceil(data.totalHits / perPage);
       this.setState({ totalPage });
       this.setState({ isLoading: false });
@@ -71,10 +71,7 @@ export class App extends Component {
       return;
     }
 
-    this.setState({ query,
-      page: 1,
-      arrayImages: [],
-     });
+    this.setState({ query, page: 1, arrayImages: [] });
   };
 
   loadNextPage = () => {
@@ -89,9 +86,7 @@ export class App extends Component {
     return (
       <div className={css.App}>
         <Searchbar onSubmit={this.handleFormSubmit} />
-        {isLoading && (
-          <Loader/>
-        )}
+        {isLoading && <Loader />}
 
         {arrayImages.length ? (
           <ImageGallery arrayImages={arrayImages} />
