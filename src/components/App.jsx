@@ -19,12 +19,11 @@ export class App extends Component {
   };
 
   componentDidUpdate(_, prevState) {
-    const { query, page, totalPage } = this.state;
+    const { query, page } = this.state;
 
     if (prevState.query !== query || prevState.page !== page) {
       this.fetchImageByQuery();
     }
-
   }
 
   fetchImageByQuery = async () => {
