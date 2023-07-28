@@ -25,11 +25,6 @@ export class App extends Component {
       this.fetchImageByQuery();
     }
 
-    if (prevState.page === totalPage && page !== 1) {
-      toast.warning(
-        "We're sorry, but you've reached the end of search results!"
-      );
-    }
   }
 
   fetchImageByQuery = async () => {
@@ -47,6 +42,12 @@ export class App extends Component {
         return;
       }
       const totalPage = Math.ceil(data.totalHits / perPage);
+      if (this.state.page === this.state.totalPage && page !== 1) {
+        toast.warning(
+          "We're sorry, but you've reached the end of search results!"
+        );
+      }
+
       this.setState(prevState => ({
         arrayImages: [...prevState.arrayImages, ...data.hits],
         totalPage,
