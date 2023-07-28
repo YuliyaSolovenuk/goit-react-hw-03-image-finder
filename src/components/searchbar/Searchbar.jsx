@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { FaSearch } from 'react-icons/fa';
 import { Component } from 'react';
@@ -14,7 +15,10 @@ export class Searchbar extends Component {
 
   handleSubmitSearch = e => {
     e.preventDefault();
-
+    if (!this.state.query.trim()) {
+      toast.warning('Enter a search query!');
+      return;
+    }
     this.props.onSubmit(this.state.query);
     this.setState({ query: '' });
     e.target.reset();

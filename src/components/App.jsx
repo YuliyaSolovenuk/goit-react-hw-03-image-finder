@@ -21,12 +21,6 @@ export class App extends Component {
   componentDidUpdate(_, prevState) {
     const { query, page, totalPage } = this.state;
 
-    if (!query.trim()) {
-      //alert('Enter a search query!');
-      toast.warning('Enter a search query!');
-      return;
-    }
-
     if (prevState.query !== query || prevState.page !== page) {
       this.fetchImageByQuery();
     }
@@ -50,21 +44,22 @@ export class App extends Component {
         toast.warning(
           'Sorry, there are no images matching your search query. Please try again.'
         );
+        return;
       }
+      const totalPage = Math.ceil(data.totalHits / perPage);
       this.setState(prevState => ({
         arrayImages: [...prevState.arrayImages, ...data.hits],
+        totalPage,
       }));
-      const totalPage = Math.ceil(data.totalHits / perPage);
-      this.setState({ totalPage });
-      this.setState({ isLoading: false });
     } catch (error) {
-      this.setState({ isLoading: false });
       console.error(error);
+    } finally {
+      this.setState({ isLoading: false });
     }
   };
 
   handleFormSubmit = query => {
-    if (this.state.query === query && query) {
+    if (this.state.query === query) {
       toast.warning(
         'Please enter a new keyword to search.The result of this query is displayed.'
       );
